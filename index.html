@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OnlyPlus • Entrando no VIP…</title>
+  <meta name="description" content="Redirecionando você para o bot VIP do OnlyPlus no Telegram." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --only:#2F80ED; --only2:#56CCF2; }
+    html,body{height:100%;}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;}
+    .gradient-bg{background: linear-gradient(180deg, #070A11, #0A0F1A);}    
+    .shine{background:linear-gradient(110deg,rgba(255,255,255,.05) 8%,rgba(255,255,255,.2) 18%,rgba(255,255,255,.05) 33%);
+           background-size:200% 100%;animation:shine 1.2s linear infinite;}@keyframes shine{to{background-position-x:-200%;}}
+    .pulse{box-shadow:0 0 0 0 rgba(86,204,242,.45);animation:pulse 1.8s infinite;}@keyframes pulse{to{box-shadow:0 0 0 24px rgba(86,204,242,0);}}
+    .step-dot{display:inline-block;width:12px;height:12px;border-radius:9999px;background-color:rgba(255,255,255,0.3);transition:background-color .3s ease;}
+    .step-dot.active{background-color:#fff;}
+    .mock{background:linear-gradient(180deg,#0c1422,#0f1b2e); border:1px solid rgba(255,255,255,.08);}
+  </style>
+</head>
+<body class="gradient-bg text-white">
+  <main class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-3xl">
+      <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur">
+        <div class="grid md:grid-cols-2">
+          <!-- Left -->
+          <section class="relative p-6 md:p-8">
+            <h1 class="text-xl md:text-2xl font-extrabold">Entrando no OnlyPlus VIP…</h1>
+            <p class="text-white/70 text-sm">Redirecionaremos você para o Telegram em <span id="count">3</span>s</p>
+
+            <!-- Steps -->
+            <ol class="mt-5 space-y-2">
+              <li class="flex items-center gap-2 text-white/80"><span id="st1" class="step-dot"></span><span>Localizando modelos… 🔍</span></li>
+              <li class="flex items-center gap-2 text-white/80"><span id="st2" class="step-dot"></span><span>1.289 modelos localizadas 💙</span></li>
+              <li class="flex items-center gap-2 text-white/80"><span id="st3" class="step-dot"></span><span>Te levando até o destino 🔐</span></li>
+            </ol>
+
+            <!-- CTA -->
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <button id="cta" class="pulse inline-flex items-center gap-2 rounded-2xl bg-[var(--only)] px-5 py-3 font-semibold shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-[var(--only2)]">
+                Abrir no Telegram agora
+              </button>
+            </div>
+
+            <!-- Texto neutro / seguro -->
+            <div class="mt-6 space-y-2 text-sm text-white/80">
+              <p>🔔 Receba novidades e conteúdos exclusivos diretamente no Telegram.</p>
+              <p>📲 Acesso rápido e simples: clique e entre no canal VIP.</p>
+              <p>🛡️ Ambiente verificado e seguro, sem anúncios invasivos.</p>
+              <p>👑 Entre agora e descubra o que está rolando no VIP.</p>
+            </div>
+          </section>
+
+          <!-- Right: mockups limpos -->
+          <aside class="relative p-6 md:p-8 bg-black/30 border-t md:border-l border-white/10">
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Mock 1 -->
+              <div class="mock rounded-xl p-3">
+                <div class="flex items-center gap-2">
+                  <div class="h-7 w-7 rounded-full bg-[var(--only)]/20 grid place-items-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 10h10M7 14h6" stroke="#56CCF2" stroke-width="2" stroke-linecap="round"/></svg>
+                  </div>
+                  <div class="font-semibold text-sm">OnlyPlus VIP</div>
+                </div>
+                <div class="mt-3 space-y-2 text-xs text-white/70">
+                  <div class="h-3 w-3/4 rounded-full bg-white/10"></div>
+                  <div class="h-3 w-2/3 rounded-full bg-white/10"></div>
+                  <div class="h-28 rounded-lg bg-white/5 shine"></div>
+                </div>
+              </div>
+
+              <!-- Mock 2 -->
+              <div class="mock rounded-xl p-3">
+                <div class="flex items-center gap-2">
+                  <div class="h-7 w-7 rounded-full bg-[var(--only)]/20 grid place-items-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#56CCF2" stroke-width="2" stroke-linecap="round"/></svg>
+                  </div>
+                  <div class="font-semibold text-sm">Canal no Telegram</div>
+                </div>
+                <div class="mt-3 space-y-2 text-xs text-white/70">
+                  <div class="h-3 w-5/6 rounded-full bg-white/10"></div>
+                  <div class="h-3 w-3/4 rounded-full bg-white/10"></div>
+                  <div class="h-24 grid place-items-center rounded-lg bg-white/5">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                      <path d="M22 2 11 13" stroke="#56CCF2" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M22 2l-7 20-4-9-9-4 20-7Z" stroke="#2F80ED" stroke-width="2" fill="none"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mock 3 -->
+              <div class="mock rounded-xl p-3">
+                <div class="flex items-center gap-2">
+                  <div class="h-7 w-7 rounded-full bg-[var(--only)]/20 grid place-items-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" stroke="#56CCF2" stroke-width="2"/><path d="M6 20a6 6 0 0 1 12 0" stroke="#2F80ED" stroke-width="2"/></svg>
+                  </div>
+                  <div class="font-semibold text-sm">Prévia do grupo</div>
+                </div>
+                <div class="mt-3 space-y-2 text-xs text-white/70">
+                  <div class="h-3 w-4/5 rounded-full bg-white/10"></div>
+                  <div class="h-3 w-2/3 rounded-full bg-white/10"></div>
+                  <div class="h-24 rounded-lg bg-white/5 shine"></div>
+                </div>
+              </div>
+
+              <!-- Mock 4 -->
+              <div class="mock rounded-xl p-3">
+                <div class="flex items-center gap-2">
+                  <div class="h-7 w-7 rounded-full bg-[var(--only)]/20 grid place-items-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="3" stroke="#56CCF2" stroke-width="2"/><path d="M3 9h18" stroke="#2F80ED" stroke-width="2"/></svg>
+                  </div>
+                  <div class="font-semibold text-sm">Conteúdo organizado</div>
+                </div>
+                <div class="mt-3 space-y-2 text-xs text-white/70">
+                  <div class="h-3 w-2/3 rounded-full bg-white/10"></div>
+                  <div class="h-3 w-3/5 rounded-full bg-white/10"></div>
+                  <div class="grid grid-cols-3 gap-2">
+                    <div class="h-14 rounded-md bg-white/5"></div>
+                    <div class="h-14 rounded-md bg-white/5"></div>
+                    <div class="h-14 rounded-md bg-white/5"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const BOT_USERNAME = 'onlyplus_bot';
+    const AUTO_SECONDS = 10;
+    const $ = (sel) => document.querySelector(sel);
+    const isMobile = () => /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
+
+    function deepLinks() {
+      const tgNative = `tg://resolve?domain=${BOT_USERNAME}`;
+      const tgWeb = `https://t.me/${BOT_USERNAME}`;
+      return { tgNative, tgWeb };
+    }
+
+    function markSteps() {
+      setTimeout(()=> $('#st1').classList.add('active'), 500);
+      setTimeout(()=> $('#st2').classList.add('active'), 1500);
+      setTimeout(()=> $('#st3').classList.add('active'), 2500);
+    }
+
+    function openTelegram() {
+      const { tgNative, tgWeb } = deepLinks();
+      if (isMobile()) {
+        window.location.href = tgNative;
+        setTimeout(()=> window.location.href = tgWeb, 1200);
+      } else {
+        window.location.href = tgWeb;
+      }
+    }
+
+    function startCountdown() {
+      let c = AUTO_SECONDS;
+      const el = $('#count');
+      el.textContent = c;
+      markSteps();
+      const t = setInterval(()=>{
+        c--; el.textContent = c;
+        if (c <= 0) { clearInterval(t); openTelegram(); }
+      }, 1000);
+    }
+
+    // Opcional: “modo seguro” automático para tráfego de FB/IG (mantém tudo limpo mesmo se mudar algo depois)
+    (function enforceSafe(){
+      const ref = document.referrer.toLowerCase();
+      const isMeta = ref.includes('facebook.com') || ref.includes('instagram.com') || ref.includes('messenger.com');
+      if (isMeta) {
+        // Aqui poderíamos ocultar qualquer bloco sensível futuro se existir
+        // document.querySelectorAll('.spicy')?.forEach(el=> el.remove());
+      }
+    })();
+
+    window.addEventListener('DOMContentLoaded', () => {
+      startCountdown();
+      $('#cta').addEventListener('click', openTelegram);
+    });
+  </script>
+</body>
+</html>
