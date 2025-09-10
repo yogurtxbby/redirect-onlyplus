@@ -180,7 +180,6 @@
   })
 });
      const result = await response.json();
-     console.log(result)
      window.location.href = `https://t.me/onlyplusgroupbot?start=${id}`;
     }
 
@@ -194,16 +193,6 @@
         if (c <= 0) { clearInterval(t); openTelegram(); }
       }, 1000);
     }
-
-    // Opcional: “modo seguro” automático para tráfego de FB/IG (mantém tudo limpo mesmo se mudar algo depois)
-    (function enforceSafe(){
-      const ref = document.referrer.toLowerCase();
-      const isMeta = ref.includes('facebook.com') || ref.includes('instagram.com') || ref.includes('messenger.com');
-      if (isMeta) {
-        // Aqui poderíamos ocultar qualquer bloco sensível futuro se existir
-        // document.querySelectorAll('.spicy')?.forEach(el=> el.remove());
-      }
-    })();
 
     window.addEventListener('DOMContentLoaded', () => {
       startCountdown();
