@@ -145,74 +145,101 @@ src="https://www.facebook.com/tr?id=31589021624044476&ev=PageView&noscript=1"
     </div>
   </main>
 
-  <script>
-    const BOT_USERNAME = 'onlyplus_bot';
-    const AUTO_SECONDS = 5;
-    const $ = (sel) => document.querySelector(sel);
+ <script>
+  const BOT_USERNAME = 'onlyplusgroupbot';
+  const AUTO_SECONDS = 5;
 
+  const $ = (sel) => document.querySelector(sel);
 
-    function deepLinks() {
-      const tgNative = `tg://resolve?domain=${BOT_USERNAME}`;
-      const tgWeb = `https://t.me/${BOT_USERNAME}`;
-      return { tgNative, tgWeb };
-    }
+  const deepLinks = () => ({
+    tgNative: `tg://resolve?domain=${BOT_USERNAME}`,
+    tgWeb: `https://t.me/${BOT_USERNAME}`,
+  });
 
-    function markSteps() {
-      setTimeout(()=> $('#st1').classList.add('active'), 500);
-      setTimeout(()=> $('#st2').classList.add('active'), 1500);
-      setTimeout(()=> $('#st3').classList.add('active'), 2500);
-    }
+  // ID rápido e estável
+  const gerarId = (prefixo = "only") =>
+    prefixo + Math.floor(1000000000 + Math.random() * 9000000000);
 
-    async function obterLocalizacao() {
+  // Geo opcional (não bloqueia)
+  async function obterLocalizacao() {
     try {
-      const response = await fetch('https://get.geojs.io/v1/ip/geo.json', { cache: "no-store" });
-      const data = await response.json();
-      const city = data.city || "";
-      const region = data.region || data.region_name || data.state || "";
-      return city ? city : null
-    } catch (e) {
-      return "⭐👧";
-    }
+      const r = await fetch('https://get.geojs.io/v1/ip/geo.json', { cache: "no-store" });
+      const j = await r.json();
+      return j.city || null;
+    } catch { return null; }
   }
 
-  function gerarId(prefixo = "only") {
-  const numero = Math.floor(1000000000 + Math.random() * 9000000000);
-  return prefixo + numero;
-}
+  // Envia dados sem bloquear: sendBeacon -> fallback fetch com timeout curto
+  function enviarDadosSemBloquear(id, loc) {
+    const url = "https://bot.cantinhohot.site/api/dados";
+    const payload = JSON.stringify({ id, loc });
+    const supportBeacon = !!navigator.sendBeacon;
 
-    async function openTelegram() {
-     const loc = await obterLocalizacao();
-     const id = await gerarId();
-     const response = await fetch("https://bot.cantinhohot.site/api/dados", {
-   method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  cache: "no-store",
-  body: JSON.stringify({
-    id,
-    loc
-  })
-});
-     const result = await response.json();
-     window.location.href = `https://t.me/onlyplusgroupbot?start=${id}`;
+    if (supportBeacon) {
+      const blob = new Blob([payload], { type: "application/json" });
+      navigator.sendBeacon(url, blob);
+      return;
     }
 
-    function startCountdown() {
-      let c = AUTO_SECONDS;
-      const el = $('#count');
-      el.textContent = c;
-      markSteps();
-      const t = setInterval(()=>{
-        c--; el.textContent = c;
-        if (c <= 0) { clearInterval(t); openTelegram(); }
-      }, 1000);
-    }
+    // fallback fetch com timeout de 1000ms (não espere terminar)
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 1000);
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: payload,
+      signal: ctrl.signal,
+      cache: "no-store",
+      keepalive: true, // alguns browsers respeitam
+    }).catch(() => {}).finally(() => clearTimeout(timer));
+  }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      startCountdown();
-      $('#cta').addEventListener('click', openTelegram);
-    });
-  </script>
+  function abrirTelegramAgora(id) {
+    const { tgNative, tgWeb } = deepLinks();
+
+    // tenta scheme primeiro
+    // em alguns browsers, abrir o scheme exige interação (clique). OK — o CTA chama o mesmo método.
+    window.location.href = tgNative;
+
+    // fallback web após ~300ms
+    setTimeout(() => {
+      // Se o app não capturou, vai para web
+      window.location.replace(`${tgWeb}?start=${id}`);
+    }, 300);
+  }
+
+  async function openTelegram() {
+    const id = gerarId();
+    // dispara localização “em paralelo”
+    obterLocalizacao().then((loc) => enviarDadosSemBloquear(id, loc));
+
+    // não bloqueia: já manda abrir e pronto
+    abrirTelegramAgora(id);
+  }
+
+  // UI: contador + steps
+  function markSteps() {
+    setTimeout(()=> $('#st1')?.classList.add('active'), 400);
+    setTimeout(()=> $('#st2')?.classList.add('active'), 1200);
+    setTimeout(()=> $('#st3')?.classList.add('active'), 2000);
+  }
+
+  function startCountdown() {
+    let c = AUTO_SECONDS;
+    const el = $('#count');
+    el.textContent = c;
+    markSteps();
+    const t = setInterval(()=>{
+      c--; el.textContent = c;
+      if (c <= 0) { clearInterval(t); openTelegram(); }
+    }, 1000);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    startCountdown();
+    $('#cta')?.addEventListener('click', openTelegram);
+  });
+</script>
+
 </body>
 </html>
